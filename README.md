@@ -6,6 +6,12 @@ This code is free to use. For now, only 30 vegetation indices are available. How
 
 ## Examples of use:
 
+### Installation:
+
+```
+!pip install git+https://github.com/syamaniulm/pyvi.git
+```
+
 ### GEE Environment:
 
 ```
