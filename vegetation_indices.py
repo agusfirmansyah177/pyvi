@@ -6,7 +6,7 @@ Created on Fri May 02 09:39:08 2025
 Faculty of Forestry, Universitas Lambung Mangkurat
 Banjarbaru, Indonesia
 
-VEGETATION INDICES
+Python Vegetation Indices (PyVI)
 Version 2.0
 
 """
