@@ -4,15 +4,15 @@ The PyVI is used to automate the computation of vegetation indices using the Pyt
 
 This code is free to use. For now, only 30 vegetation indices are available. However, vegetation indices will continue to be updated. Of course, you are required to cite every literature of the vegetation indices you use.
 
-## Examples of use:
+## Instructions:
 
-### Installation:
+### Cloning:
 
 ```
 !git clone https://github.com/syamaniulm/pyvi
 ```
 
-### GEE Environment:
+### Examples of use in GEE environment:
 
 ```
 ...
@@ -26,7 +26,7 @@ ndvi_image = Geevi.ndvi(red,nir)
 
 ```
 
-### NumPy Array:
+### Examples of use in NumPy Array:
 
 ```
 ...
@@ -42,4 +42,4 @@ ndvi_array = Npvi.ndvi(red,nir)
 
 #### Note:
 
-
+You must install Git software (https://git-scm.com/) beforehand if you want to clone the code into your computer.
