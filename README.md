@@ -9,7 +9,7 @@ This code is free to use. For now, only 30 vegetation indices are available. How
 ### Installation:
 
 ```
-!pip install git+https://github.com/syamaniulm/pyvi.git
+!git clone https://github.com/syamaniulm/pyvi
 ```
 
 ### GEE Environment:
@@ -20,7 +20,7 @@ This code is free to use. For now, only 30 vegetation indices are available. How
 red = s2_image.select('B4')
 nir = s2_image.select('B8')
 
-from vegetation_indices import Geevi
+from pyvi.vegetation_indices import Geevi
 
 ndvi_image = Geevi.ndvi(red,nir)
 
@@ -34,8 +34,12 @@ ndvi_image = Geevi.ndvi(red,nir)
 red = image_array[:,:,3]
 nir = image_array[:,:,7]
 
-from vegetation_indices import Npvi
+from pyvi.vegetation_indices import Npvi
 
 ndvi_array = Npvi.ndvi(red,nir)
 
 ```
+
+#### Note:
+
+
