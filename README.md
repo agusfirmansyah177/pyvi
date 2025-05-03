@@ -12,6 +12,10 @@ This code is free to use. For now, only 30 vegetation indices are available. How
 !git clone https://github.com/syamaniulm/pyvi
 ```
 
+##### Note:
+
+You must install Git software (https://git-scm.com/) beforehand if you want to clone the code into your computer.
+
 ### Examples of use in GEE environment:
 
 ```
@@ -39,7 +43,3 @@ from pyvi.vegetation_indices import Npvi
 ndvi_array = Npvi.ndvi(red,nir)
 
 ```
-
-#### Note:
-
-You must install Git software (https://git-scm.com/) beforehand if you want to clone the code into your computer.
