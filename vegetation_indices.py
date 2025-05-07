@@ -7,7 +7,7 @@ Faculty of Forestry, Universitas Lambung Mangkurat
 Banjarbaru, Indonesia
 
 Python Vegetation Indices (PyVI)
-Version 2.0
+Version 3.0
 
 """
 
@@ -21,7 +21,7 @@ class Geevi:
     # Difference Vegetation Index (DVI)
     @staticmethod
     def dvi(red,nir):
-        dvi_eq = nir.subtract(red)
+        dvi_eq = nir.subtract(red).rename('DVI')
         print("------------------------------------------------------------------------------")
         print("You are using Difference Vegetation Index (DVI) (Richardson and Wiegand, 1977)")
         print("------------------------------------------------------------------------------")
@@ -34,7 +34,7 @@ class Geevi:
     # Weighted Difference Vegetation Index (WDVI)
     @staticmethod
     def wdvi(red,nir,a=0.46):
-        wdvi_eq = nir.subtract((red).multiply(a))
+        wdvi_eq = nir.subtract((red).multiply(a)).rename('WDVI')
         print("-------------------------------------------------------------------------")
         print("You are using Weighted Difference Vegetation Index (WDVI) (Clevers, 1991)")
         print("-------------------------------------------------------------------------")
@@ -48,7 +48,7 @@ class Geevi:
     # Ratio Vegetation Index (RVI)
     @staticmethod
     def rvi(red,nir):
-        rvi_eq = nir.divide(red)
+        rvi_eq = nir.divide(red).rename('RVI')
         print("---------------------------------------------------------------")
         print("You are using Ratio Vegetation Index (RVI) (Major et al., 1990)")
         print("---------------------------------------------------------------")
@@ -62,7 +62,7 @@ class Geevi:
     # Normalized Difference Vegetation Index (NDVI)
     @staticmethod
     def ndvi(red,nir):
-        ndvi_eq = (nir.subtract(red)).divide(nir.add(red))
+        ndvi_eq = (nir.subtract(red)).divide(nir.add(red)).rename('NDVI')
         print("--------------------------------------------------------------------------------")
         print("You are using Normalized Difference Vegetation Index (NDVI) (Rouse et al., 1974)")
         print("--------------------------------------------------------------------------------")
@@ -76,7 +76,7 @@ class Geevi:
     # Renormalized Difference Vegetation Index (RDVI)
     @staticmethod
     def rdvi(red,nir):
-        rdvi_eq = (nir.subtract(red)).divide(ee.Image.sqrt(nir.add(red)).multiply(0.5))
+        rdvi_eq = (nir.subtract(red)).divide(ee.Image.sqrt(nir.add(red)).multiply(0.5)).rename('RDVI')
         print("---------------------------------------------------------------------------------------")
         print("You are using Renormalized Difference Vegetation Index (RDVI) (Broge and Leblanc, 2001)")
         print("---------------------------------------------------------------------------------------")
@@ -90,7 +90,7 @@ class Geevi:
     # Soil Adjusted Vegetation Index (SAVI)
     @staticmethod
     def savi(red,nir,l=0.5):
-        savi_eq = ((nir.subtract(red)).divide((nir.add(red).add(l))).multiply(1+l))
+        savi_eq = ((nir.subtract(red)).divide((nir.add(red).add(l))).multiply(1+l)).rename('SAVI')
         print("-----------------------------------------------------------------")
         print("You are using Soil Adjusted Vegetation Index (SAVI) (Huete, 1988)")
         print("-----------------------------------------------------------------")
@@ -104,7 +104,7 @@ class Geevi:
     # Transformed Soil Adjusted Vegetation Index (TSAVI)
     @staticmethod
     def tsavi(red,nir,a=0.5,s=0.5,x=0.08):
-        tsavi_eq = ((nir.subtract(red.multiply(s)).subtract(a)).multiply(s)).divide((nir.multiply(s)).add(red).subtract(a*s+x*(1+s**2)))
+        tsavi_eq = ((nir.subtract(red.multiply(s)).subtract(a)).multiply(s)).divide((nir.multiply(s)).add(red).subtract(a*s+x*(1+s**2))).rename('TSAVI')
         print("----------------------------------------------------------------------------------------")
         print("You are using Transformed Soil Adjusted Vegetation Index (TSAVI) (Baret and Guyot, 1991)")
         print("----------------------------------------------------------------------------------------")
@@ -121,7 +121,7 @@ class Geevi:
         ndvi = (nir.subtract(red)).divide(nir.add(red))
         wdvi = nir.subtract(red.multiply(a))
         l = ee.Image(1).subtract(ee.Image(2*s).multiply(ndvi).multiply(wdvi))
-        msavi_eq = ((nir.subtract(red)).multiply(l.add(1))).divide(nir.add(red).add(l))
+        msavi_eq = ((nir.subtract(red)).multiply(l.add(1))).divide(nir.add(red).add(l)).rename('MSAVI')
         print("-------------------------------------------------------------------------------")
         print("You are using Modified Soil Adjusted Vegetation Index (MSAVI) (Qi et al., 1994)")
         print("-------------------------------------------------------------------------------")
@@ -135,7 +135,7 @@ class Geevi:
     # Optimized Soil Adjusted Vegetation Index (OSAVI)
     @staticmethod
     def osavi(red,nir,y=0.16):
-        osavi_eq = ((nir.subtract(red)).multiply(1+y)).divide(nir.add(red).add(y))
+        osavi_eq = ((nir.subtract(red)).multiply(1+y)).divide(nir.add(red).add(y)).rename('OSAVI')
         print("--------------------------------------------------------------------------------------------------------------")
         print("You are using Optimized Soil Adjusted Vegetation Index (OSAVI) (Rondeaux et al., 1996; Haboudane et al., 2002)")
         print("--------------------------------------------------------------------------------------------------------------")
@@ -153,7 +153,7 @@ class Geevi:
     # Perpendicular Vegetation Index (PVI)
     @staticmethod
     def pvi(red,nir):
-        pvi_eq = (nir.subtract(red)).divide(ee.Image.sqrt(nir.add(red)).multiply(0.5))
+        pvi_eq = (nir.subtract(red)).divide(ee.Image.sqrt(nir.add(red)).multiply(0.5)).rename('PVI')
         print("---------------------------------------------------------------------------------")
         print("You are using Perpendicular Vegetation Index (PVI) (Richardson and Wiegand, 1977)")
         print("---------------------------------------------------------------------------------")
@@ -166,7 +166,7 @@ class Geevi:
     # Infrared Percentage Vegetation Index (IPVI)
     @staticmethod
     def ipvi(red,nir):
-        ipvi_eq = nir.divide(nir.add(red))
+        ipvi_eq = nir.divide(nir.add(red)).rename('IPVI')
         print("-------------------------------------------------------------------------")
         print("You are using Infrared Percentage Vegetation Index (IPVI) (Crippen, 1990)")
         print("-------------------------------------------------------------------------")
@@ -180,7 +180,7 @@ class Geevi:
     # Transformed Normalized Difference Vegetation Index (TNDVI)
     @staticmethod
     def tndvi(red,nir):
-        tndvi_eq = ee.Image.sqrt(((nir.add(red)).divide(nir.add(red))).add(0.5))
+        tndvi_eq = ee.Image.sqrt(((nir.add(red)).divide(nir.add(red))).add(0.5)).rename('TNDVI')
         print("------------------------------------------------------------------------------------------------")
         print("You are using Transformed Normalized Difference Vegetation Index (TNDVI) (Senseman et al., 1996)")
         print("------------------------------------------------------------------------------------------------")
@@ -194,7 +194,7 @@ class Geevi:
     # Green Difference Vegetation Index (GDVI)
     @staticmethod
     def gdvi(green,nir):
-        gdvi_eq = nir.subtract(green)
+        gdvi_eq = nir.subtract(green).rename('GDVI')
         print("----------------------------------------------------------------------------")
         print("You are using Green Difference Vegetation Index (GDVI) (Tucker et al., 1979)")
         print("----------------------------------------------------------------------------")
@@ -208,7 +208,7 @@ class Geevi:
     # Green Normalized Difference Vegetation Index (GNDVI)
     @staticmethod
     def gndvi(green,nir):
-        gndvi_eq = (nir.subtract(green)).divide(nir.add(green))
+        gndvi_eq = (nir.subtract(green)).divide(nir.add(green)).rename('GNDVI')
         print("------------------------------------------------------------------------------------------")
         print("You are using Green Normalized Difference Vegetation Index (GNDVI) (Gitelson et al., 1996)")
         print("------------------------------------------------------------------------------------------")
@@ -223,7 +223,7 @@ class Geevi:
     @staticmethod
     def gemi(red,nir):
         eta = ((nir.pow(2).subtract(red.pow(2))).multiply(2).add(nir.multiply(1.5)).add(red.multiply(0.5))).divide(nir.add(red).add(0.5))
-        gemi_eq = eta.multiply(ee.Image(1).subtract(eta.multiply(0.25))).subtract((red.subtract(0.125)).divide(ee.Image(1).subtract(red)))
+        gemi_eq = eta.multiply(ee.Image(1).subtract(eta.multiply(0.25))).subtract((red.subtract(0.125)).divide(ee.Image(1).subtract(red))).rename('GEMI')
         print("---------------------------------------------------------------------------------------")
         print("You are using Global Environmental Monitoring Index (GEMI) (Pinty and Verstraete, 1992)")
         print("---------------------------------------------------------------------------------------")
@@ -237,7 +237,7 @@ class Geevi:
     # Atmospherically Resistant Vegetation Index (ARVI)
     @staticmethod
     def arvi(blue,red,nir):
-        arvi_eq = (nir.subtract(red.multiply(2).subtract(blue))).divide(nir.add(red.multiply(2).subtract(blue)))
+        arvi_eq = (nir.subtract(red.multiply(2).subtract(blue))).divide(nir.add(red.multiply(2).subtract(blue))).rename('ARVI')
         print("-----------------------------------------------------------------------------------------")
         print("You are using Atmospherically Resistant Vegetation Index (ARVI) (Kaufman and Tanre, 1992)")
         print("-----------------------------------------------------------------------------------------")
@@ -251,7 +251,7 @@ class Geevi:
     # Normalized Difference Index 45 (NDI45)
     @staticmethod
     def ndi45(red,re1):
-        ndi45_eq = (re1.subtract(red)).divide(re1.add(red))
+        ndi45_eq = (re1.subtract(red)).divide(re1.add(red)).rename('NDI45')
         print("----------------------------------------------------------------------------")
         print("You are using Normalized Difference Index 45 (NDI45) (Delegido et al., 2011)")
         print("----------------------------------------------------------------------------")
@@ -265,7 +265,7 @@ class Geevi:
     # Modified Chlorophyll Absorption Reflectance Index (MCARI)
     @staticmethod
     def mcari(green,red,re1):
-        mcari_eq = ((re1.subtract(red)).subtract((re1.subtract(green)).multiply(0.2))).multiply(re1.divide(red))
+        mcari_eq = ((re1.subtract(red)).subtract((re1.subtract(green)).multiply(0.2))).multiply(re1.divide(red)).rename('MCARI')
         print("-----------------------------------------------------------------------------------------------")
         print("You are using Modified Chlorophyll Absorption Reflectance Index (MCARI) (Daughtry et al., 2000)")
         print("-----------------------------------------------------------------------------------------------")
@@ -279,7 +279,7 @@ class Geevi:
     # Enhanced Vegetation Index (EVI)
     @staticmethod
     def evi(blue,red,nir):
-        evi_eq = ((nir.subtract(red)).multiply(2.5)).divide(nir.add(red.multiply(6)).subtract(blue.multiply(7.5)).add(1))
+        evi_eq = ((nir.subtract(red)).multiply(2.5)).divide(nir.add(red.multiply(6)).subtract(blue.multiply(7.5)).add(1)).rename('EVI')
         print("-------------------------------------------------------------------")
         print("You are using Enhanced Vegetation Index (EVI) (Huete et. al., 2002)")
         print("-------------------------------------------------------------------")
@@ -293,7 +293,7 @@ class Geevi:
     # Sentinel-2 Red-Edge Position Index (S2REP)
     @staticmethod
     def s2rep(red,re1,re2,re3):
-        s2rep_eq = (((red.add(re3)).divide(2).subtract(re1)).divide(re2.subtract(re1))).multiply(35).add(705)
+        s2rep_eq = (((red.add(re3)).divide(2).subtract(re1)).divide(re2.subtract(re1))).multiply(35).add(705).rename('S2REP')
         print("--------------------------------------------------------------------------------")
         print("You are using Sentinel-2 Red-Edge Position Index (S2REP) (Guyot and Baret, 1988)")
         print("--------------------------------------------------------------------------------")
@@ -306,7 +306,7 @@ class Geevi:
     # Inverted Red-Edge Chlorophyll Index (IRECI)
     @staticmethod
     def ireci(red,re1,re2,re3):
-        ireci_eq = (re3.subtract(red)).divide(re1.divide(re2))
+        ireci_eq = (re3.subtract(red)).divide(re1.divide(re2)).rename('IRECI')
         print("---------------------------------------------------------------------------------")
         print("You are using Inverted Red-Edge Chlorophyll Index (IRECI) (Clevers et. al., 2000)")
         print("---------------------------------------------------------------------------------")
@@ -319,7 +319,7 @@ class Geevi:
     # Pigment Specific Simple Ratio (PSSRa)
     @staticmethod
     def pssra(red,re):
-        pssra_eq = re.divide(red)
+        pssra_eq = re.divide(red).rename('PSSRa')
         print("---------------------------------------------------------------------")
         print("You are using Pigment Specific Simple Ratio (PSSRa) (Blackburn, 1998)")
         print("---------------------------------------------------------------------")
@@ -333,7 +333,7 @@ class Geevi:
     # Anthocyanin Reflectance Index (ARI)
     @staticmethod
     def ari(green,re1):
-        ari_eq = (ee.Image(1).divide(green)).subtract(ee.Image(1).divide(re1))
+        ari_eq = (ee.Image(1).divide(green)).subtract(ee.Image(1).divide(re1)).rename('ARI')
         print("-------------------------------------------------------------------------")
         print("You are using Anthocyanin Reflectance Index (ARI) (Gitelson et al., 2009)")
         print("-------------------------------------------------------------------------")
@@ -347,7 +347,7 @@ class Geevi:
     # Green Leaf Index (GLI)
     @staticmethod
     def gli(blue,green,red):
-        gli_eq = (ee.Image(2).multiply(green).subtract(red).subtract(blue)).divide(ee.Image(2).multiply(green).add(red).add(blue))
+        gli_eq = (ee.Image(2).multiply(green).subtract(red).subtract(blue)).divide(ee.Image(2).multiply(green).add(red).add(blue)).rename('GLI')
         print("----------------------------------------------------------")
         print("You are using Green Leaf Index (GLI) (Gobron et al., 2000)")
         print("----------------------------------------------------------")
@@ -361,7 +361,7 @@ class Geevi:
     # Leaf Chlorophyll Index (LCI)
     @staticmethod
     def lci(red,re1,nir):
-        lci_eq = (nir.subtract(re1)).divide(nir.subtract(red))
+        lci_eq = (nir.subtract(re1)).divide(nir.subtract(red)).rename('LCI')
         print("---------------------------------------------------------------------")
         print("You are using Leaf Chlorophyll Index (LCI) (Datt, 1999a; Datt, 1999b)")
         print("---------------------------------------------------------------------")
@@ -379,7 +379,7 @@ class Geevi:
     # Chlorophyll Vegetation Index (CVI)
     @staticmethod
     def cvi(green,red,nir):
-        cvi_eq = (nir.multiply(red)).divide(green.pow(2))
+        cvi_eq = (nir.multiply(red)).divide(green.pow(2)).rename('CVI')
         print("----------------------------------------------------------------------")
         print("You are using Chlorophyll Vegetation Index (CVI) (Gobron et al., 2000)")
         print("----------------------------------------------------------------------")
@@ -393,7 +393,7 @@ class Geevi:
     # Carotenoid Reflectance Index 550 nm (CRI550)
     @staticmethod
     def cri550(blue,green):
-        cri550_eq = (ee.Image(1).divide(blue)).subtract(ee.Image(1).divide(green))
+        cri550_eq = (ee.Image(1).divide(blue)).subtract(ee.Image(1).divide(green)).rename('CRI550')
         print("----------------------------------------------------------------------------------")
         print("You are using Carotenoid Reflectance Index 550 nm (CRI550) (Gitelson et al., 2001)")
         print("----------------------------------------------------------------------------------")
@@ -407,7 +407,7 @@ class Geevi:
     # Carotenoid Reflectance Index 700 nm (CRI700)
     @staticmethod
     def cri700(blue,re1):
-        cri700_eq = (ee.Image(1).divide(blue)).subtract(ee.Image(1).divide(re1))
+        cri700_eq = (ee.Image(1).divide(blue)).subtract(ee.Image(1).divide(re1)).rename('CRI700')
         print("----------------------------------------------------------------------------------")
         print("You are using Carotenoid Reflectance Index 700 nm (CRI700) (Merzlyak et al., 2003)")
         print("----------------------------------------------------------------------------------")
@@ -421,7 +421,7 @@ class Geevi:
     # Canopy Chlorophyll Content Index (CCCI)
     @staticmethod
     def ccci(red,re1,nir):
-        ccci_eq = ((nir.subtract(re1)).divide(nir.add(re1))).divide((nir.subtract(red)).divide(nir.add(red)))
+        ccci_eq = ((nir.subtract(re1)).divide(nir.add(re1))).divide((nir.subtract(red)).divide(nir.add(red))).rename('CCCI')
         print("------------------------------------------------------------------------------")
         print("You are using Canopy Chlorophyll Content Index (CCCI) (El-Shikha et al., 2008)")
         print("------------------------------------------------------------------------------")
@@ -435,7 +435,7 @@ class Geevi:
     # Transformed Vegetation Index (TVI)
     @staticmethod
     def tvi(red,nir):
-        tvi_eq = ee.Image.sqrt(((nir.add(red)).divide(nir.add(red))).add(0.5))
+        tvi_eq = ee.Image.sqrt(((nir.add(red)).divide(nir.add(red))).add(0.5)).rename('TVI')
         print("---------------------------------------------------------------------")
         print("You are using Transformed Vegetation Index (TVI) (Rouse et al., 1974)")
         print("---------------------------------------------------------------------")
