@@ -515,7 +515,7 @@ class Npvi:
         print("Broge, N.H., Leblanc, E., 2001. "+
               "Comparing prediction power and stability of broadband and hyperspectral vegetation indices for estimation of green leaf area index and canopy chlorophyll density. "+
               "Remote Sensing of Environment 76 (2), 156-172. "+
-              "doi: https://doi.org/10.1016/S0034-4257(00)00197-8")
+              "doi: https://doi.org/10.1016/S0034-4257 (00)00197-8")
         return rdvi_eq
     
     # Soil Adjusted Vegetation Index (SAVI)
